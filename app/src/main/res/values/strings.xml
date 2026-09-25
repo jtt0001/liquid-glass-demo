@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ✓ 并入 feat/diamond-demo 后仍为主线口径：应用名保持 Liquid Glass
+         （钻石分支的 'Liquid Diamond' 只属于钻石独立构建 com.liqglass.diamond） -->
+    <string name="app_name">Liquid Glass</string>
+</resources>

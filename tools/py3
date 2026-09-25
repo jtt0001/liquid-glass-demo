@@ -1,0 +1,4 @@
+#!/bin/sh
+# 用【带 PIL 的解释器】运行 python（后台/前台都可用）。
+# 背景：Hermes 的后台执行环境 PATH 不同 → 直接 `python3` 可能没有 PIL ✗；本包装器固定用已验证可用的解释器 ✓
+exec /Library/Developer/CommandLineTools/usr/bin/python3 "$@"

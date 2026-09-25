@@ -1,0 +1,19 @@
+# Build outputs
+build/
+*/build/
+.gradle/
+local.properties
+.idea/
+*.apk
+*.aab
+*.jks
+# 只忽略构建产物，不忽略 keystore 说明文件
+!README.md
+
+# macOS / Kotlin 会话垃圾
+.DS_Store
+**/.DS_Store
+.kotlin/
+
+# 作者本人设备截图（含 iCloud 目录名，公开前移出仓库 ✓ 2026-09-18）
+707441DE-*.heic

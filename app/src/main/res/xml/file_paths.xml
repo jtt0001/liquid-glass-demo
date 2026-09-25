@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  【P19·App 内分享调试日志】AndroidX FileProvider 的路径白名单。
+
+  只暴露【应用外部私有目录的根】= /sdcard/Android/data/com.liqglass.ultraclear/files/
+  —— 这正是 debug/AppDebugLog.kt 里 exportAsync() 写 debug_<session>.txt、
+  pruneOldExports() 清理旧 debug_*.txt 的那个目录（context.getExternalFilesDir(null)）。
+  ⇒ 除该目录外【不放行任何位置】：内部 files/、cache、外部存储根、其它 App 目录一律不在白名单内
+    （getUriForFile 对白名单外的文件会抛 IllegalArgumentException，AppDebugLog.share() 已兜住 ⇒ 走降级不崩）。
+
+  对应 manifest：<provider android:name="androidx.core.content.FileProvider"
+                        android:authorities="${applicationId}.fileprovider" ...>
+                 <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+                            android:resource="@xml/file_paths" />
+-->
+<paths>
+    <!-- external-files-path = Context.getExternalFilesDir(null)；path="." = 该目录本身（不再向下开放子目录白名单之外的用法）
+         实测 URI 形态：content://com.liqglass.ultraclear.fileprovider/debug_logs/debug_<session>.txt -->
+    <external-files-path name="debug_logs" path="." />
+</paths>

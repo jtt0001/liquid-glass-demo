@@ -1,0 +1,41 @@
+# 版本目录：所有依赖必须使用确定版本，禁止动态版本。
+[versions]
+# Android Gradle Plugin：与 Backdrop 2.0.0 官方仓库构建链一致（支持 compileSdk 37）
+agp = "9.2.1"
+# Kotlin Compose 编译器插件（AGP 9 内置 Kotlin，无需 kotlin-android 插件）
+kotlinCompose = "2.3.21"
+# Kotlin Multiplatform（backdrop 本地模块需要）
+kotlinMultiplatform = "2.3.21"
+# JetBrains Compose Multiplatform（backdrop 本地模块的 Compose 依赖，与上游一致）
+jetbrainsCompose = "1.11.0"
+# 固定 Liquid Glass 库版本（仅作为上游版本参照；实际使用本地源码模块）
+backdrop = "2.0.0"
+# AndroidX 依赖
+composeBom = "2026.08.00"
+activityCompose = "1.13.0"
+coreKtx = "1.18.0"
+# backdrop 模块上游依赖
+kyantShapes = "1.2.1"
+jetbrainsAnnotations = "26.1.0"
+
+[libraries]
+backdrop = { group = "io.github.kyant0", name = "backdrop", version.ref = "backdrop" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+compose-ui = { group = "androidx.compose.ui", name = "ui" }
+compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+# backdrop 模块（CMP 坐标，与上游 2.0.0 一致）
+cmp-foundation = { group = "org.jetbrains.compose.foundation", name = "foundation", version.ref = "jetbrainsCompose" }
+cmp-ui = { group = "org.jetbrains.compose.ui", name = "ui", version.ref = "jetbrainsCompose" }
+cmp-ui-graphics = { group = "org.jetbrains.compose.ui", name = "ui-graphics", version.ref = "jetbrainsCompose" }
+kyant-shapes = { group = "io.github.kyant0", name = "shapes", version.ref = "kyantShapes" }
+jetbrains-annotations = { group = "org.jetbrains", name = "annotations", version.ref = "jetbrainsAnnotations" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinCompose" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlinMultiplatform" }
+android-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "jetbrainsCompose" }
