@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    项目内置风景矢量图（无网络图片）：
+    - 天空渐变 + 太阳
+    - 双层远山
+    - 湖面 + 太阳倒影
+    - 前景岸线
+    用于玻璃卡片缩略图。
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- 天空 -->
+    <path
+        android:fillColor="#7FB2E5"
+        android:pathData="M0,0 H108 V64 Q54,58 0,64 Z" />
+
+    <!-- 太阳 -->
+    <path
+        android:fillColor="#FFF3C4"
+        android:pathData="M78,20 a9,9 0 1,0 18,0 a9,9 0 1,0 -18,0" />
+
+    <!-- 远山 -->
+    <path
+        android:fillColor="#8A9BC8"
+        android:pathData="M0,66 L22,44 L40,60 L58,38 L80,62 L108,42 L108,72 L0,72 Z" />
+
+    <!-- 近山 -->
+    <path
+        android:fillColor="#5C6FA8"
+        android:pathData="M0,72 L18,58 L38,70 L56,52 L76,70 L96,56 L108,64 L108,82 L0,82 Z" />
+
+    <!-- 湖面 -->
+    <path
+        android:fillColor="#4A7BB8"
+        android:pathData="M0,82 H108 V108 H0 Z" />
+
+    <!-- 湖面反光 -->
+    <path
+        android:fillColor="#33FFFFFF"
+        android:pathData="M34,88 H74 V89.5 H34 Z M40,95 H68 V96.5 H40 Z M46,102 H62 V103.5 H46 Z" />
+
+    <!-- 前景岸线 -->
+    <path
+        android:fillColor="#22334F"
+        android:pathData="M0,102 H108 V108 H0 Z" />
+</vector>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 【P63】Android 13+ 预测式返回：打开后系统侧边返回手势会给 OnBackInvoked/OnBackPressed
+         回调逐帧 progress（PredictiveBackHandler 收集它 → 逐帧联动面板收起）；不打开则退化为
+         「返回即收起」。关闭本行 = 一行回退（回到 legacy 返回派发，行为同样可用）。 -->
+    <application
+        android:enableOnBackInvokedCallback="true"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.LiquidGlass">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|smallestScreenSize|density|uiMode">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 【AI 调试接口】adb 广播桥（仅 debug 构建生效：receiver 内以 android:debuggable 标志门控）。
+             用法与全部子命令见 debug/DebugBridge.kt 文件头注释（am broadcast, action=com.liqglass.DEBUG, extra cmd=…）。
+             结果：logcat（tag=AIDebug）+ 应用内调试日志（dump* 子命令同步导出到 files/ 目录）。 -->
+        <receiver
+            android:name=".debug.DebugBridgeReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.liqglass.DEBUG" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 【P19·App 内分享调试日志】AndroidX FileProvider：把应用私有 files/ 里的 debug_*.txt
+             以 content:// URI 交给外部 App（微信 / 文件传输助手 / 邮件 / 短信…），不必接 adb。
+             · authority = ${applicationId}.fileprovider ⇒ com.liqglass.ultraclear.fileprovider
+               （AppDebugLog.share() 用 context.packageName + ".fileprovider" 取同一个 authority
+                 ⇒ 改包名不用改两处 ✓）；
+             · exported=false（不对外暴露任何入口）+ grantUriPermissions=true（只对【本次分享的接收方】
+               临时授予读权限，即 Intent 的 FLAG_GRANT_READ_URI_PERMISSION 生效的那条通路）；
+             · 路径白名单见 res/xml/file_paths.xml（只放行 external files 根 = debug_*.txt 所在目录）。 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+
+    <!-- 【P19】包可见性声明：targetSdk 36 ⇒ API 30+ 的包可见性过滤会把未声明的隐式查询清空，
+         而分享入口要用 queryIntentActivities(ACTION_SEND, text/plain) 数【可接收的 App 数】
+         （0 目标 ⇒ 走优雅降级）。声明这条 intent 后查询结果才是真实值 ✓ -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="text/plain" />
+        </intent>
+    </queries>
+
+</manifest>
